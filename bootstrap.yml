@@ -55,16 +55,16 @@
     tags:
       - lightdm_pantheon_greeter
 
-  - name: Install i3 and rofi
+  - name: Install i3 and dmenu
     community.general.pacman:
       name:
         - i3-gaps
-        - rofi
+        - dmenu
       state: present
     become: yes
     tags:
       - i3
-      - rofi
+      - dmenu
 
   - name: Install firefox
     community.general.pacman:
