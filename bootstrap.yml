@@ -12,14 +12,14 @@
     register: yay_installed
 
   - name: Install yay if not installed already
-    block:
-      - name: Get yay source code
-        git:
-          repo: https://aur.archlinux.org/yay-git.git
-          dest: ~/yay-git
-      - name: Build and install yay
-        command: chdir=~/yay-git makepkg -si --noconfirm
-      - name: Remove yay git directory
-        command: rm -rf ~/yay-git
-    tags: yay
-    when: yay_installed.stdout != "1"
+    - block:
+        - name: Get yay source code
+          git:
+            repo: https://aur.archlinux.org/yay-git.git
+            dest: ~/yay-git
+        - name: Build and install yay
+          command: chdir=~/yay-git makepkg -si --noconfirm
+        - name: Remove yay git directory
+          command: rm -rf ~/yay-git
+      tags: yay
+      when: yay_installed.stdout != "1"
