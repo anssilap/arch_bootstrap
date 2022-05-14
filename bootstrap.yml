@@ -4,8 +4,8 @@
   - name: Register variables
     block:
       - name: Check if yay is installed
-      ansible.builtin.shell: yay --version | wc -l
-      register: yay_installed
+        ansible.builtin.shell: yay --version | wc -l
+        register: yay_installed
 
   - name: Pacman update
     community.general.pacman:
