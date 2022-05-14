@@ -11,4 +11,4 @@ fi
 
 ansible-galaxy collection install community.general
 
-ansible-playbook bootstrap.yml --connection=loca
+ansible-playbook bootstrap.yml --connection=local
