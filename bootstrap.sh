@@ -9,6 +9,7 @@ if ! which ansible &> /dev/null
         sudo pacman -S --noconfirm ansible
 fi
 
+#TODO install collection only if it doesn't exist
 ansible-galaxy collection install community.general
 
-ansible-playbook bootstrap.yml --connection=local
+ansible-playbook bootstrap.yml -i inventory.yml --connection=local
