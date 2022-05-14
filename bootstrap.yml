@@ -11,6 +11,53 @@
     ansible.builtin.shell: yay --version | wc -l
     register: yay_installed
 
+  - name: Install Xorg parts that aren't already installed
+    community.general.pacman:
+      name:
+        - xorg
+        - xorg-server
+        - xorg-xinit
+        - xorg-xrandr
+      state: present
+    become: yes
+    tags:
+      - xorg
+
+  - name: Install and configure lightdm
+    block:
+      - name: Install lightdm
+        community.general.pacman:
+          name:
+            - lightdm
+          state: present
+      - name: Enable lightdm
+        command: systemctl enable lightdm
+    become: yes
+    tags:
+      - lightdm
+
+  - name: Install and enable lightdm pantheon greeter
+    block:
+      - name: Install lightdm
+        community.general.pacman:
+          name:
+            - lightdm-pantheon-greeter
+          state: present
+      - name: Enable pantheon-greeter for LightDM
+        lineinfile:
+          path: /etc/lightdm/lightdm.conf
+          state: present
+          regexp: 'greeter-session'
+          line: greeter-session=io.elementary.greeter
+    become: yes
+    tags:
+      - lightdm_pantheon_greeter
+
+    # command: pacman -S --noconfirm i3-gaps dmenu feh
+    # become: true
+    # tags:
+    #   - desktop
+
   - name: Install yay if not installed already
     block:
       - name: Get yay source code
