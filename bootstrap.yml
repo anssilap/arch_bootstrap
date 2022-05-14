@@ -1,17 +1,19 @@
 - hosts: localhost
   connection: local
   tasks:
+  - name: Register variables
+    block:
+      - name: Check if yay is installed
+      ansible.builtin.shell: yay --version | wc -l
+      register: yay_installed
+
   - name: Pacman update
     community.general.pacman:
       update_cache: yes
       upgrade: yes
     become: yes
 
-  - name: Check if yay is installed
-    ansible.builtin.shell: yay --version | wc -l
-    register: yay_installed
-
-  - name: Install Xorg parts that aren't already installed
+  - name: Install Xorg
     community.general.pacman:
       name:
         - xorg
