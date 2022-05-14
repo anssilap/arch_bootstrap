@@ -11,7 +11,7 @@
     # TODO Run this only if yay is not already installed
     block:
       - name: Register yay installed
-        ansible.builtin.shell: yay --version
+        ansible.builtin.shell: yay --version | wc -l
         register: yay_installed
       - name: Get yay source code
         git:
