@@ -9,7 +9,7 @@ if ! which ansible &> /dev/null
         sudo pacman -S --noconfirm ansible
 fi
 
-if ! ansible-galaxy collection list | grep community.general &> /dev/null
+if ! ansible-galaxy collection verify community.general | grep "Installed collection found at" &> /dev/null
     then
         ansible-galaxy collection install community.general
 fi
