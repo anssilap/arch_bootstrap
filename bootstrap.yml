@@ -38,7 +38,7 @@
 
   - name: Install and enable lightdm pantheon greeter
     block:
-      - name: Install lightdm
+      - name: Install lightdm pantheon greeter
         community.general.pacman:
           name:
             - lightdm-pantheon-greeter
@@ -70,3 +70,22 @@
         command: rm -rf ~/yay-git
     tags: yay
     when: yay_installed.stdout != "1"
+
+  - name: Add hosts definitions for localhost
+    block:
+    - name: localhost IPv4
+      lineinfile:
+        path: /etc/hosts
+        state: present
+        regexp: '^127.0.0.1'
+        line: 127.0.0.1     localhost
+      become: yes
+    - name: localhost IPv6
+      lineinfile:
+        path: /etc/hosts
+        state: present
+        regexp: '^::1'
+        line: ::1           localhost
+      become: yes
+      tags:
+        - hosts
