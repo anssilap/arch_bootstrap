@@ -1,3 +1,7 @@
-- name: Install yay
-  community.general.pacman:
-    name: yay
+- hosts: all
+  tasks:
+  - name: Install yay
+    community.general.pacman:
+      name: yay
+    tags:
+      - yay
