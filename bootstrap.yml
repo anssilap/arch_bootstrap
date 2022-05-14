@@ -3,7 +3,6 @@
   tasks:
   - name: Pacman update
     community.general.pacman:
-      become: yes
       update_cache: yes
       upgrade: yes
 
