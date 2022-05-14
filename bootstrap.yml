@@ -29,11 +29,12 @@
     block:
       - name: Install lightdm
         community.general.pacman:
-          name:
-            - lightdm
+          name: lightdm
           state: present
-      - name: Enable lightdm
-        command: systemctl enable lightdm
+      - name: Enable service httpd and ensure it is not masked
+        ansible.builtin.systemd:
+          name: lightdm
+          enabled: yes
     become: yes
     tags:
       - lightdm
