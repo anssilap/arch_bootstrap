@@ -5,9 +5,22 @@
     community.general.pacman:
       update_cache: yes
       upgrade: yes
+    become: yes
 
   - name: Install yay
-    community.general.pacman:
-      name: yay
-    tags:
-      - yay
+    block:
+      - name: Get yay source code
+        git:
+          repo: https://aur.archlinux.org/yay-git.git
+          dest: ~/yay-git
+      - name: Build and install yay
+        command: chdir=~/yay-git makepkg -si --noconfirm
+      - name: Remove yay git directory
+        command: rm -rf ~/yay-git
+    tags: yay
+
+  # - name: Install yay
+  #   community.general.pacman:
+  #     name: yay
+  #   tags:
+  #     - yay
