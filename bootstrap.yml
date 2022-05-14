@@ -7,21 +7,19 @@
       upgrade: yes
     become: yes
 
-  - name: Install yay
-    # TODO Run this only if yay is not already installed
+  - name: Check if yay is installed
+    ansible.builtin.shell: yay --version | wc -l
+    register: yay_installed
+
+  - name: Install yay if not installed already
     block:
-      - name: Register yay installed
-        ansible.builtin.shell: yay --version | wc -l
-        register: yay_installed
       - name: Get yay source code
         git:
           repo: https://aur.archlinux.org/yay-git.git
           dest: ~/yay-git
-          when: yay_installed.stdout != "1"
       - name: Build and install yay
         command: chdir=~/yay-git makepkg -si --noconfirm
-        when: yay_installed.stdout != "1"
       - name: Remove yay git directory
         command: rm -rf ~/yay-git
-        when: yay_installed.stdout != "1"
     tags: yay
+    when: yay_installed.stdout != "1"
