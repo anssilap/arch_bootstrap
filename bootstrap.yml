@@ -1,4 +1,5 @@
-- hosts: all
+- hosts: localhost
+  connection: local
   tasks:
   - name: Install yay
     community.general.pacman:
