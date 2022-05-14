@@ -3,9 +3,10 @@
   tasks:
   - name: Pacman update
     community.general.pacman:
+      become: yes
       update_cache: yes
       upgrade: yes
-      
+
   - name: Install yay
     community.general.pacman:
       name: yay
