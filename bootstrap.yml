@@ -116,3 +116,8 @@
     become: yes
     tags:
       - hosts
+
+  - name: Generate ssh key
+    community.crypto.openssh_keypair:
+      path: /home/{{ ansible_user_id }}/.ssh/id_rsa
+  
