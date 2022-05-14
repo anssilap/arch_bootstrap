@@ -64,7 +64,7 @@
       - i3
       - rofi
 
-  - name: Install i3 and rofi
+  - name: Install firefox
     community.general.pacman:
       name:
         - firefox
