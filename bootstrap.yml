@@ -75,6 +75,15 @@
     tags:
       - firefox
 
+  - name: Install alacritty
+    community.general.pacman:
+      name:
+        - alacritty
+      state: present
+    become: yes
+    tags:
+      - alacritty
+
   - name: Install yay if not installed already
     block:
       - name: Get yay source code
