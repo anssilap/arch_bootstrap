@@ -53,10 +53,25 @@
     tags:
       - lightdm_pantheon_greeter
 
-    # command: pacman -S --noconfirm i3-gaps dmenu feh
-    # become: true
-    # tags:
-    #   - desktop
+  - name: Install i3 and rofi
+    community.general.pacman:
+      name:
+        - i3-gaps
+        - rofi
+      state: present
+    become: yes
+    tags:
+      - i3
+      - rofi
+
+  - name: Install i3 and rofi
+    community.general.pacman:
+      name:
+        - firefox
+      state: present
+    become: yes
+    tags:
+      - firefox
 
   - name: Install yay if not installed already
     block:
@@ -68,8 +83,9 @@
         command: chdir=~/yay-git makepkg -si --noconfirm
       - name: Remove yay git directory
         command: rm -rf ~/yay-git
-    tags: yay
     when: yay_installed.stdout != "1"
+    tags:
+      - yay
 
   - name: Add hosts definitions for localhost
     block:
@@ -79,13 +95,12 @@
         state: present
         regexp: '^127.0.0.1'
         line: 127.0.0.1     localhost
-      become: yes
     - name: localhost IPv6
       lineinfile:
         path: /etc/hosts
         state: present
         regexp: '^::1'
         line: ::1           localhost
-      become: yes
-      tags:
-        - hosts
+    become: yes
+    tags:
+      - hosts
