@@ -99,6 +99,15 @@
     tags:
       - yay
 
+  - name: Install neovim
+    community.general.pacman:
+      name:
+        - neovim
+      state: present
+    become: yes
+    tags:
+      - neovim
+    
   - name: Add hosts definitions for localhost
     block:
     - name: localhost IPv4
