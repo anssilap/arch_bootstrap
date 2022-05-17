@@ -29,9 +29,11 @@
     block:
       - name: Install lightdm
         community.general.pacman:
-          name: lightdm
+          name:
+            - lightdm
+            - lightdm-gtk-greeter
           state: present
-      - name: Enable service httpd and ensure it is not masked
+      - name: Enable lightdm
         ansible.builtin.systemd:
           name: lightdm
           enabled: yes
@@ -39,22 +41,22 @@
     tags:
       - lightdm
 
-  - name: Install and enable lightdm pantheon greeter
-    block:
-      - name: Install lightdm pantheon greeter
-        community.general.pacman:
-          name:
-            - lightdm-pantheon-greeter
-          state: present
-      - name: Enable pantheon-greeter for LightDM
-        lineinfile:
-          path: /etc/lightdm/lightdm.conf
-          state: present
-          regexp: 'greeter-session'
-          line: greeter-session=io.elementary.greeter
-    become: yes
-    tags:
-      - lightdm_pantheon_greeter
+  # - name: Install and enable lightdm pantheon greeter
+  #   block:
+  #     - name: Install lightdm pantheon greeter
+  #       community.general.pacman:
+  #         name:
+  #           - lightdm-pantheon-greeter
+  #         state: present
+  #     - name: Enable pantheon-greeter for LightDM
+  #       lineinfile:
+  #         path: /etc/lightdm/lightdm.conf
+  #         state: present
+  #         regexp: 'greeter-session'
+  #         line: greeter-session=io.elementary.greeter
+  #   become: yes
+  #   tags:
+  #     - lightdm_pantheon_greeter
 
   - name: Install i3 and dmenu
     community.general.pacman:
