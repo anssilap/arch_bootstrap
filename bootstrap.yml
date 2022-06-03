@@ -25,38 +25,20 @@
     tags:
       - xorg
 
-  - name: Install and configure lightdm
+  - name: Install and enable sddm
     block:
-      - name: Install lightdm
+      - name: Install sddm
         community.general.pacman:
           name:
-            - lightdm
-            - lightdm-gtk-greeter
+            - sddm
           state: present
-      - name: Enable lightdm
+      - name: Enable sddm
         ansible.builtin.systemd:
-          name: lightdm
+          name: sddm
           enabled: yes
     become: yes
     tags:
-      - lightdm
-
-  # - name: Install and enable lightdm pantheon greeter
-  #   block:
-  #     - name: Install lightdm pantheon greeter
-  #       community.general.pacman:
-  #         name:
-  #           - lightdm-pantheon-greeter
-  #         state: present
-  #     - name: Enable pantheon-greeter for LightDM
-  #       lineinfile:
-  #         path: /etc/lightdm/lightdm.conf
-  #         state: present
-  #         regexp: 'greeter-session'
-  #         line: greeter-session=io.elementary.greeter
-  #   become: yes
-  #   tags:
-  #     - lightdm_pantheon_greeter
+      - sddm
 
   - name: Install i3 and dmenu
     community.general.pacman:
